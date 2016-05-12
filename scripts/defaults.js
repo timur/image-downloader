@@ -21,6 +21,7 @@
     filter_url: '',
     filter_url_mode: 'normal',
     filter_min_width: 0,
+    model_name: '',
     filter_min_width_enabled: false,
     filter_max_width: 3000,
     filter_max_width_enabled: false,

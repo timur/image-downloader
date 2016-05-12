@@ -11,6 +11,12 @@
         ls.folder_name = $.trim(this.value);
       });
 
+    $('#model_name')
+      .val(ls.model_name)
+      .on('change', function () {
+        ls.model_name = $.trim(this.value);
+      });
+
     // Register filter URL listener
     $('#filter_textbox')
       .val(ls.filter_url)
@@ -101,6 +107,7 @@
           filterImages();
         });
     }
+  
 
     $('#images_table')
       .on('change', '#toggle_all_checkbox', function () {
@@ -160,6 +167,7 @@
     $('#image_width_filter').toggle(ls.show_image_width_filter === 'true');
     $('#image_height_filter').toggle(ls.show_image_height_filter === 'true');
     $('#only_images_from_links_container').toggle(ls.show_only_images_from_links === 'true');
+
 
     // Images
     jss.set('.image_buttons_container', {
@@ -345,7 +353,8 @@
   }
 
   function downloadImages() {
-    if (ls.show_download_confirmation === 'true') {
+   
+    if (ls.only_images_from_links === 'true') {
       showDownloadConfirmation(startDownload);
     }
     else {
@@ -353,14 +362,29 @@
     }
 
     function startDownload() {
+
+      var csvRows = [];
+    
       var checkedImages = 0;
       for (var i = 0; i < visibleImages.length; i++) {
         if ($('#image' + i).hasClass('checked')) {
           checkedImages++;
           chrome.downloads.download({ url: visibleImages[i] });
+    
+          if (visibleImages[i].startsWith("data:image") == false) {
+            csvRows.push([visibleImages[i], ls.model_name]);
+          }
         }
       }
 
+      var csvString = csvRows.join("\r\n");
+      var a = document.createElement('a');
+
+      a.href     = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
+      a.target   = '_blank';
+      a.download = ls.model_name + '.csv';
+      a.click();
+    
       flashDownloadingNotification(checkedImages);
     }
   }
