@@ -387,7 +387,7 @@
 
       a.href     = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
       a.target   = '_blank';
-      a.download = ls.model_name + '.csv';
+      a.download = ls.model_name + '_' + ls.image_type + '.csv';
       a.click();
     
       flashDownloadingNotification(checkedImages);
