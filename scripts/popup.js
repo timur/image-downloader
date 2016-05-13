@@ -17,6 +17,11 @@
         ls.model_name = $.trim(this.value);
       });
 
+    $('#image_type')
+      .on('change', function () {
+        ls.image_type = this.value;
+      });
+
     // Register filter URL listener
     $('#filter_textbox')
       .val(ls.filter_url)
@@ -372,7 +377,7 @@
           chrome.downloads.download({ url: visibleImages[i] });
     
           if (visibleImages[i].startsWith("data:image") == false) {
-            csvRows.push([visibleImages[i], ls.model_name]);
+            csvRows.push([visibleImages[i], ls.model_name, ls.image_type]);
           }
         }
       }

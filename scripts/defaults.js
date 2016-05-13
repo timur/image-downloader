@@ -19,6 +19,7 @@
     // Filters
     folder_name: '',
     filter_url: '',
+    image_type: '',
     filter_url_mode: 'normal',
     filter_min_width: 0,
     model_name: '',
